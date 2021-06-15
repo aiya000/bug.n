@@ -410,114 +410,82 @@ Config_UI_saveSession() {
   Config_saveSession(Config_filePath, Config_filePath)
 }
 
-;; Key definitions
-;; Window management
-#Down::View_activateWindow(0, +1)
-#Up::View_activateWindow(0, -1)
-#+Down::View_shuffleWindow(0, +1)
-#+Up::View_shuffleWindow(0, -1)
-#+Enter::View_shuffleWindow(1)
-#c::Manager_closeWindow()
-#+d::Window_toggleDecor()
-#+f::View_toggleFloatingWindow()
-#+m::Manager_moveWindow()
-#^m::Manager_minimizeWindow()
-#+s::Manager_sizeWindow()
-#+x::Manager_maximizeWindow()
-#i::Manager_getWindowInfo()
-#+i::Manager_getWindowList()
-!Down::View_moveWindow(0, +1)
-!Up::View_moveWindow(0, -1)
-!+Enter::Manager_maximizeWindow()
-!1::View_moveWindow(1)
-!2::View_moveWindow(2)
-!3::View_moveWindow(3)
-!4::View_moveWindow(4)
-!5::View_moveWindow(5)
-!6::View_moveWindow(6)
-!7::View_moveWindow(7)
-!8::View_moveWindow(8)
-!9::View_moveWindow(9)
-!0::View_moveWindow(10)
-!BackSpace::View_toggleStackArea()
+;--------------------------------;
+; vvv Keymappings by aiya000 vvv ;
+;--------------------------------;
 
-;; Window debugging
-#^i::Debug_logViewWindowList()
-#^+i::Debug_logManagedWindowList()
-#^h::Debug_logHelp()
-#^d::Debug_setLogLevel(0, -1)
-#^+d::Debug_setLogLevel(0, +1)
+; Manipulating bug.n and Windows components
+; {{{
 
-;; Layout management
-#Tab::View_setLayout(-1)
-#f::View_setLayout(3)
-#m::View_setLayout(2)
-#t::View_setLayout(1)
-#Left::View_setLayoutProperty("MFactor", 0, -0.05)
-#Right::View_setLayoutProperty("MFactor", 0, +0.05)
-#^t::View_setLayoutProperty("Axis", 0, +1, 1)
-#^Enter::View_setLayoutProperty("Axis", 0, +2, 1)
-#^Tab::View_setLayoutProperty("Axis", 0, +1, 2)
-#^+Tab::View_setLayoutProperty("Axis", 0, +1, 3)
-#^Up::View_setLayoutProperty("MY", 0, +1)
-#^Down::View_setLayoutProperty("MY", 0, -1)
-#^Right::View_setLayoutProperty("MX", 0, +1)
-#^Left::View_setLayoutProperty("MX", 0, -1)
-#+Left::View_setLayoutProperty("GapWidth", 0, -2)
-#+Right::View_setLayoutProperty("GapWidth", 0, +2)
-#^Backspace::View_resetTileLayout()
+!^r::Reload
+!#::ExitApp
+!^g::Monitor_toggleBar()
+!^Space::Monitor_toggleTaskBar()
 
-;; View/Tag management
-#+n::View_toggleMargins()
-#BackSpace::Monitor_activateView(-1)
-#+0::Monitor_setWindowTag(10)
-#1::Monitor_activateView(1)
-#+1::Monitor_setWindowTag(1)
-#^1::Monitor_toggleWindowTag(1)
-#2::Monitor_activateView(2)
-#+2::Monitor_setWindowTag(2)
-#^2::Monitor_toggleWindowTag(2)
-#3::Monitor_activateView(3)
-#+3::Monitor_setWindowTag(3)
-#^3::Monitor_toggleWindowTag(3)
-#4::Monitor_activateView(4)
-#+4::Monitor_setWindowTag(4)
-#^4::Monitor_toggleWindowTag(4)
-#5::Monitor_activateView(5)
-#+5::Monitor_setWindowTag(5)
-#^5::Monitor_toggleWindowTag(5)
-#6::Monitor_activateView(6)
-#+6::Monitor_setWindowTag(6)
-#^6::Monitor_toggleWindowTag(6)
-#7::Monitor_activateView(7)
-#+7::Monitor_setWindowTag(7)
-#^7::Monitor_toggleWindowTag(7)
-#8::Monitor_activateView(8)
-#+8::Monitor_setWindowTag(8)
-#^8::Monitor_toggleWindowTag(8)
-#9::Monitor_activateView(9)
-#+9::Monitor_setWindowTag(9)
-#^9::Monitor_toggleWindowTag(9)
-~WheelUp::Manager_activateViewByMouse(-1)
-~WheelDown::Manager_activateViewByMouse(+1)
+; }}}
 
-;; Monitor management
-#.::Manager_activateMonitor(0, +1)
-#,::Manager_activateMonitor(0, -1)
-#+.::Manager_setWindowMonitor(0, +1)
-#+,::Manager_setWindowMonitor(0, -1)
-#^+.::Manager_setViewMonitor(0, +1)
-#^+,::Manager_setViewMonitor(0, -1)
+; Manipulating app windows
+; {{{
+
+!h::View_activateWindow(0, -1)
+!l::View_activateWindow(0, +1)
+!^h::View_shuffleWindow(0, -1)
+!^l::View_shuffleWindow(0, +1)
+!k::Manager_maximizeWindow()
+; !j::Manager_minimizeWindow()
+
+!^1::Monitor_activateView(1)
+!^2::Monitor_activateView(2)
+!^3::Monitor_activateView(3)
+!^4::Monitor_activateView(4)
+
+; !^q::Monitor_setWindowTag(1)
+; !^w::Monitor_setWindowTag(2)
+; !^e::Monitor_setWindowTag(3)
+
+;; Switching the view for monitors
+
+!^i::
+  If (Manager_aMonitor = 3) {
+    Manager_activateMonitor(1)
+  } Else {
+    Manager_activateMonitor(3)
+  }
+return
+
+!^+i::
+  Manager_activateMonitor(0, +1)
+return
+
+;; Moving a current window onto a monitor
+
+#1::
+  Manager_setWindowMonitor(3)
+  Manager_maximizeWindow()
+return
+
+#2::
+  Manager_setWindowMonitor(1)
+  Manager_maximizeWindow()
+return
+
+#3::
+  Manager_setWindowMonitor(2)
+  Manager_maximizeWindow()
+return
+
+; }}}
+
+; Managing GUI
+; {{{
 
 ;; GUI management
 #+Space::Monitor_toggleBar()
 #Space::Monitor_toggleTaskBar()
+#i::Manager_getWindowInfo()
 #y::Bar_toggleCommandGui()
-#+y::Monitor_toggleNotifyIconOverflowWindow()
-!+y::View_traceAreas()
+#u::Window_toggleDecor()
+#f::View_toggleFloatingWindow()
+!^c::Manager_closeWindow()
 
-;; Administration
-#^e::Config_edit()
-#^s::Config_UI_saveSession()
-#^r::Reload
-#^q::ExitApp
+; }}}
