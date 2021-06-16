@@ -6,8 +6,9 @@
 $ vim src/Config.ahk
 ```
 
-## Run
+## Build & Run
 
+1. Close running bug.n if bug.n already is running
 1. Open ./tools dir with explorer.exe
 1. Run build.ahk by double clicking
 1. Run ./bugn.exe
