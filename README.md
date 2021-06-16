@@ -2,6 +2,7 @@
 ## Configure
 
 ```shell-session
+# Please see the section 'Keymappings by aiya000'
 $ vim src/Config.ahk
 ```
 
