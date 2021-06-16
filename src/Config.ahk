@@ -414,6 +414,10 @@ Config_UI_saveSession() {
 ; vvv Keymappings by aiya000 vvv ;
 ;--------------------------------;
 
+;------
+; bug.n
+;------
+
 ; Manipulating bug.n and Windows components
 ; {{{
 
@@ -446,10 +450,10 @@ Config_UI_saveSession() {
 ;; Switching the view for monitors
 
 !^i::
-  If (Manager_aMonitor = 3) {
+  If (Manager_aMonitor = 2) {
     Manager_activateMonitor(1)
   } Else {
-    Manager_activateMonitor(3)
+    Manager_activateMonitor(2)
   }
 return
 
@@ -460,7 +464,7 @@ return
 ;; Moving a current window onto a monitor
 
 #1::
-  Manager_setWindowMonitor(3)
+  Manager_setWindowMonitor(2)
   Manager_maximizeWindow()
 return
 
@@ -470,7 +474,7 @@ return
 return
 
 #3::
-  Manager_setWindowMonitor(2)
+  Manager_setWindowMonitor(3)
   Manager_maximizeWindow()
 return
 
@@ -487,5 +491,201 @@ return
 #u::Window_toggleDecor()
 #f::View_toggleFloatingWindow()
 !^c::Manager_closeWindow()
+
+; }}}
+
+;------
+; Other
+;------
+
+; General
+; {{{
+
+; Arrange windows
+#h::SendInput #{Left}
+#j::SendInput #{Down}
+#k::SendInput #{Up}
+#l::SendInput #{Right}
+
+; }}}
+
+; On apps
+; {{{
+
+; cmd prompt {{{
+
+#IfWinActive, ahk_class ConsoleWindowClass
+  ; Emulate *NIX Shell
+  ^p::SendInput {Up}
+  ^n::SendInput {Down}
+  ^f::SendInput {Right}
+  ^b::SendInput {Left}
+  ^a::SendInput {Home}
+  ^e::SendInput {End}
+  ^d::SendInput {Delete}
+  ^j::SendInput {Enter}
+  ^k::SendInput {F4}{Space}
+  ^u::SendInput {Esc}  ; TODO: incomplete
+  ^l::SendInput {Esc}cls{Enter}
+  ;
+  ^w::SendInput {NOP}  ; TODO: emulate C-w
+  ^v::SendInput !{Space}ep
+#IfWinActive
+
+; }}}
+; Chromium apps {{{
+
+#IfWinActive, ahk_class Chrome_WidgetWin_1
+  ; ^p::SendInput {Up}
+  ; ^n::SendInput {Down}
+  ; ^f::SendInput {Right}
+  ; ^b::SendInput {Left}
+  ^a::SendInput {Home}
+  ^e::SendInput {End}
+  ^j::SendInput {Enter}
+  ^u::SendInput +{Home}{BS}
+  ^k::SendInput +{End}{BS}
+  ^h::SendInput {BS}
+  ^d::SendInput {Del}
+  ^,::SendInput +{Left}
+  ^.::SendInput +{Right}
+  ^[::SendInput +{Up}
+  ^]::SendInput +{Down}
+  !j::SendInput ^{Enter}
+#IfWinActive
+
+; }}}
+; Firefox {{{
+
+#IfWinActive, ahk_class MozillaWindowClass
+  ; Support vimperator
+  ^e::SendInput {End}
+  ^j::SendInput {Enter}
+  ^h::SendInput {BS}
+  ^u::SendInput +{Home}{BS}
+  ^k::SendInput +{End}{BS}
+  ^l::SendINput {Esc}
+#IfWinActive
+
+; }}}
+; IP Messenger {{{
+
+#IfWinActive, ahk_class #32770
+  ; Support text edit
+  ^p::SendInput {Up}
+  ^n::SendInput {Down}
+  ^f::SendInput {Right}
+  ^b::SendInput {Left}
+  ^a::SendInput {Home}
+  ^e::SendInput {End}
+  ^j::SendInput {Enter}
+  ^u::SendInput +{Home}{BS}
+  ^k::SendInput +{End}{BS}
+  ^h::SendInput {BS}
+  ^d::SendInput {Del}
+  Ctrl & Enter::SendInput {Tab}{Enter}
+  ^,::SendInput +{Left}
+  ^.::SendInput +{Right}
+  ^[::SendInput +{Up}
+  ^]::SendInput +{Down}
+#IfWinActive
+
+; }}}
+; LINE {{{
+
+#IfWinActive, ahk_class Qt5QWindowIcon
+  ; Support text edit
+  ^p::SendInput {Up}
+  ^n::SendInput {Down}
+  ^f::SendInput {Right}
+  ^b::SendInput {Left}
+  ^a::SendInput {Home}
+  ^e::SendInput {End}
+  ^j::SendInput {Enter}
+  ^u::SendInput +{Home}{BS}
+  ^k::SendInput +{End}{BS}
+  ^h::SendInput {BS}
+  ^d::SendInput {Del}
+#IfWinActive
+
+; }}}
+; Adobe Reader; {{{
+
+#IfWinActive, ahk_class AcrobatSDIWindow
+  h::SendInput {Left}
+  j::SendInput {Down}
+  k::SendInput {Up}
+  l::SendInput {Right}
+  ^b::SendInput {PgUp}
+  ^f::SendInput {PgDn}
+  /::SendInput ^f
+#IfWinActive
+
+; }}}
+; Sumatora.pdf {{{
+
+#IfWinActive, ahk_class SUMATRA_PDF_FRAME
+  h::SendInput {Left}
+  j::SendInput {Down}
+  k::SendInput {Up}
+  l::SendInput {Right}
+  ; ^b::SendInput {PgUp}
+  ; ^f::SendInput {PgDn}
+  ^b::SendInput {Left}
+  ^f::SendInput {Right}
+  /::SendInput ^f
+#IfWinActive
+
+; }}}
+; Notepad {{{
+
+#IfWinActive, ahk_class Notepad
+  ^p::SendInput {Up}
+  ^n::SendInput {Down}
+  ^f::SendInput {Right}
+  ^b::SendInput {Left}
+  ^a::SendInput {Home}
+  ^e::SendInput {End}
+  ^j::SendInput {Enter}
+  ^u::SendInput +{Home}{BS}
+  ^k::SendInput +{End}{BS}
+  ^h::SendInput {BS}
+  ^d::SendInput {Del}
+  ^,::SendInput +{Left}
+  ^.::SendInput +{Right}
+  ^[::SendInput +{Up}
+  ^]::SendInput +{Down}
+#IfWinActive
+
+; }}}
+; Comipo; {{{
+
+#IfWinActive, ahk_class Comipo_MainWindow
+  ^p::SendInput {Up}
+  ^n::SendInput {Down}
+  ^f::SendInput {Right}
+  ^b::SendInput {Left}
+  ^a::SendInput {Home}
+  ^e::SendInput {End}
+  ^j::SendInput {Enter}
+  ^u::SendInput +{Home}{BS}
+  ^k::SendInput +{End}{BS}
+  ^h::SendInput {BS}
+  ^d::SendInput {Del}
+  ^,::SendInput +{Left}
+  ^.::SendInput +{Right}
+  ^[::SendInput +{Up}
+  ^]::SendInput +{Down}
+#IfWinActive
+
+; }}}
+; draw.io {{{
+
+#IfWinActive, ahk_exe draw.io.exe
+  ; Cancel 'ahk_class Chrome_WidgetWin_1' keymaps
+  ^a::SendInput ^a
+#IfWinActive
+
+; }}}
 
 ; }}}
