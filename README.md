@@ -8,7 +8,14 @@ $ vim src/Config.ahk
 
 ## Run
 
+1. Open ./tools dir with explorer.exe
+1. Run build.ahk by double clicking
+1. Run ./bugn.exe
+
+Or
+
 ```shell-session
+# This way is too heavy. Why?
 $ /mnt/c/Program\ Files/AutoHotkey/Compiler/Ahk2Exe.exe /in src/Main.ahk /out Main.exe \
     && ./Main.exe
 ```
