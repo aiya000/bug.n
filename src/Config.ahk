@@ -426,10 +426,6 @@ Config_UI_saveSession() {
   }
 return
 
-!^+i::
-  Manager_activateMonitor(0, +1)
-return
-
 ;; Moving a current window onto a monitor
 
 #1::
